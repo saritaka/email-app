@@ -1,0 +1,52 @@
+.email-preview {
+  border-bottom: 1px solid black;
+  width: 100%;
+  text-decoration: none;
+  flex-wrap: nowrap;
+  font-size: 14px;
+}
+
+.name {
+  width: 200px;
+  padding-right: 20px;
+}
+.subject {
+  /* display: flex; */
+  /* flex-wrap: nowrap; */
+
+  width: 464px;
+  padding-right: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* white-space: nowrap; */
+  /* white-space-collapse: collapse; */
+  text-wrap: nowrap;
+}
+
+.subject span {
+  text-overflow: ellipsis;
+}
+
+.date {
+  min-width: 72px;
+}
+
+.read {
+  background-color: #f2f6fc;
+  font-weight: 400;
+}
+
+.unread {
+  background-color: #ffffff;
+  /* background-color: pink; */
+  font-weight: 700;
+}
+
+/* .test-icons {
+  display: none;
+}
+.test-icons > button:hover {
+  display: block;
+  z-index: 1;
+  width: 50px;
+} */
