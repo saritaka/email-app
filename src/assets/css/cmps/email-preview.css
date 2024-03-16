@@ -1,25 +1,39 @@
 .email-preview {
-  border-bottom: 1px solid black;
+  border: 1px solid white;
+  border-bottom: 1px solid #cfc3c357;
+
   width: 100%;
   text-decoration: none;
-  flex-wrap: nowrap;
+  /* flex-wrap: nowrap; */
   font-size: 14px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  align-items: center;
+}
+
+.preview-btns {
+  /* width: 60px; */
+  /* padding-right: 20px; */
+  justify-content: start;
+  align-items: center;
 }
 
 .name {
   width: 200px;
-  padding-right: 20px;
+  /* padding-right: 20px; */
+  justify-content: start;
+  align-items: center;
 }
+
 .subject {
   /* display: flex; */
   /* flex-wrap: nowrap; */
 
   width: 464px;
-  padding-right: 16px;
+  /* padding-right: 16px; */
   overflow: hidden;
   text-overflow: ellipsis;
-  /* white-space: nowrap; */
-  /* white-space-collapse: collapse; */
   text-wrap: nowrap;
 }
 
@@ -27,21 +41,48 @@
   text-overflow: ellipsis;
 }
 
-.date {
-  min-width: 72px;
+.date-and-btns {
+  /* min-width: 72px; */
+  justify-content: end;
+  align-items: center;
 }
 
 .read {
   background-color: #f2f6fc;
+  /* background-color: rgb(0, 213, 255); */
   font-weight: 400;
 }
 
 .unread {
   background-color: #ffffff;
   /* background-color: pink; */
-  font-weight: 700;
+  /* font-weight: 500; */
+  font-weight: bold;
 }
 
+.action-btns {
+  display: none;
+}
+.email-preview:hover {
+  border: 1px solid rgba(201, 197, 197, 0.953);
+  box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.5);
+  /* box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.2); */
+}
+
+.email-preview:hover .date {
+  display: none;
+  /* padding: 30px; */
+}
+
+.email-preview:hover .action-btns {
+  display: block;
+
+  /* padding: 30px; */
+}
+
+.email-preview:hover .main-icon {
+  opacity: 0.7;
+}
 /* .test-icons {
   display: none;
 }
@@ -50,3 +91,20 @@
   z-index: 1;
   width: 50px;
 } */
+
+.main-icon {
+  border: none;
+  background-color: transparent;
+  /* background-color: white; */
+  /* height: 20px;
+  width: 20px; */
+  padding: 4px 4px 0px 4px;
+  margin: 2px;
+  /* z-index: 2; */
+  opacity: 0.3;
+}
+
+.main-icon:hover {
+  border-radius: 50%;
+  background-color: rgba(128, 128, 128, 0.6);
+}

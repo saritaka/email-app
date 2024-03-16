@@ -19,19 +19,17 @@ const loggedinUser = {
 
 _createEmails();
 
-// async function query(filterBy) {
-async function query() {
+async function query(filterBy) {
+  // async function query() {
   let emails = await storageService.query(STORAGE_KEY);
-  // if (filterBy) {
-  //   let { minBatteryStatus, type = "" } = filterBy;
-  //   minBatteryStatus = minBatteryStatus || 0;
-  //   robots = robots.filter(
-  //     (robot) =>
-  //       robot.type.toLowerCase().includes(type.toLowerCase()) &&
-  //       robot.batteryStatus > minBatteryStatus
-  //   );
-  // }
-  return emails;
+  console.log("emails", { emails });
+  if (filterBy) {
+    let { status, txt, isRead } = filterBy;
+    emails = emails.filter((email) =>
+      email.body.toLowerCase().includes(txt.toLowerCase())
+    );
+    return emails;
+  }
 }
 
 function getById(id) {
@@ -51,20 +49,15 @@ function save(emailToSave) {
   }
 }
 
-function createEmail(model = "", type = "", batteryStatus = 100) {
-  return {
-    model,
-    batteryStatus,
-    type,
-  };
+function createEmail() {
+  return {};
 }
 
 function getDefaultFilter() {
   return {
-    type: "",
-    minBatteryStatus: 50,
-    maxBattery: "",
-    model: "",
+    status: "",
+    txt: "",
+    isRead: null,
   };
 }
 

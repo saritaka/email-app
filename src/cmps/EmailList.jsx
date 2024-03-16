@@ -2,17 +2,14 @@
 import { Link } from "react-router-dom";
 import { EmailPreview } from "./EmailPreview";
 
-export function EmailList({ emails, onRemoveEmail, onUpdateEmail }) {
+export function EmailList({
+  emails,
+  onRemoveEmail,
+  onUpdateEmail,
+  changeState,
+}) {
   console.log({ emails });
   // let readStatus = useRef();
-
-  function changeReadState(email) {
-    if (!email.isRead) {
-      const newStatus = { ...email, isRead: !email.isRead };
-      console.log(!email.isRead);
-      onUpdateEmail(newStatus);
-    }
-  }
 
   return (
     <section>
@@ -20,12 +17,17 @@ export function EmailList({ emails, onRemoveEmail, onUpdateEmail }) {
       <ul className="email-list">
         {emails.map((email) => (
           <li key={email.id}>
-            <Link
+            {/* <Link
               to={`/email/${email.id}`}
               onClick={() => changeReadState(email)}
-            >
-              <EmailPreview email={email} />
-            </Link>
+            > */}
+            <EmailPreview
+              email={email}
+              onRemoveEmail={onRemoveEmail}
+              onUpdateEmail={onUpdateEmail}
+              changeState={changeState}
+            />
+            {/* </Link> */}
           </li>
         ))}
       </ul>
