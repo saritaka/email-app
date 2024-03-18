@@ -3,7 +3,7 @@
   grid-template-areas:
     "head head"
     "navbar container";
-  grid-template-columns: 187px 1fr;
+  grid-template-columns: 246px 1fr;
   position: fixed;
 }
 
@@ -16,6 +16,7 @@
 
 .menu {
   grid-area: navbar;
+  max-width: 300px;
   /* background-color: grey; */
 }
 .email-container {

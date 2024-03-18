@@ -104,7 +104,8 @@ export function EmailIndex() {
         />
       </div>
       <div className="menu">
-        <SideMenu setMenu={setMenu} />
+        {/* <SideMenu setMenu={setMenu} /> */}
+        <SideMenu onSetFilter={onSetFilter} />
       </div>
       <div className="email-container">
         <MainEmail
