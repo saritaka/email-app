@@ -1,6 +1,7 @@
 // import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { EmailPreview } from "./EmailPreview";
+import { SortButtons } from "./SortButtons";
 
 export function EmailList({
   emails,
@@ -13,7 +14,8 @@ export function EmailList({
 
   return (
     <section>
-      <div></div>
+      <SortButtons />
+      {/* <div></div> */}
       <ul className="email-list">
         {emails.map((email) => (
           <li key={email.id}>

@@ -13,6 +13,10 @@ export function EmailIndex() {
   // const [email, setEmail] = useState(null);
 
   const [filterBy, setFilterBy] = useState(emailService.getDefaultFilter());
+  // const [sortBy, setSortBy] = useState(emailService.getSortedList())
+
+  const [menuOpen, setMenu] = useState(true);
+
   console.log("filter in index", filterBy);
 
   // const params = useParams();
@@ -83,15 +87,24 @@ export function EmailIndex() {
     }
   }
 
+  function onOpenMenu() {
+    setMenu(!menuOpen);
+  }
+
   if (!emails) return <div>Loading..</div>;
 
   return (
     <section className="main-prev">
       <div className="top">
-        <Header filterBy={filterBy} onSetFilter={onSetFilter} />
+        <Header
+          filterBy={filterBy}
+          onSetFilter={onSetFilter}
+          setMenu={setMenu}
+          onOpenMenu={onOpenMenu}
+        />
       </div>
       <div className="menu">
-        <SideMenu />
+        <SideMenu setMenu={setMenu} />
       </div>
       <div className="email-container">
         <MainEmail

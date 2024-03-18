@@ -2,10 +2,12 @@
   display: grid;
   grid-template-rows: repeat(auto-fill);
   padding: 0;
-
+  margin-top: 20px;
   list-style-type: none;
   overflow: scroll;
   font-weight: normal;
+  max-height: 700px;
+
   /* background-color: #f2f6fc; */
   /* background-color: pink; */
   /* background-color: white; */
@@ -15,6 +17,10 @@
   text-decoration: none;
 }
 
-.email-list > li:hover {
+/* .email-list > li:hover {
   box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.5);
-}
+} */
+
+/* .email-list > li {
+  max-height: 40px;
+} */

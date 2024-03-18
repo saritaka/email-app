@@ -4,6 +4,7 @@
     "head head"
     "navbar container";
   grid-template-columns: 187px 1fr;
+  position: fixed;
 }
 
 .top {
@@ -26,7 +27,7 @@
   border-radius: 20px;
 }
 
-svg {
+/* svg {
   height: 50px;
   width: 20px;
-}
+} */

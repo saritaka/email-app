@@ -32,7 +32,7 @@ export function MainEmail({ emails, onRemoveEmail, onUpdateEmail }) {
   }
 
   return (
-    <section>
+    <section className="main-container">
       {/* {!params.emailId && ( */}
       {/* <div>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, ipsam.

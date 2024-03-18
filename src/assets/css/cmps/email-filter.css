@@ -1,0 +1,15 @@
+.filter-modal {
+  position: fixed;
+  width: 600px;
+  /* height: 500px; */
+  z-index: 10;
+  background-color: white;
+
+  /* display: flex; */
+  /* align-items: center; */
+  /* flex-direction: column; */
+}
+.filter-modal form {
+  display: flex;
+  flex-direction: column;
+}

@@ -23,7 +23,7 @@ export function EmailPreview({
   // const [isChecked, setChecked] = useState();
 
   const date = new Date(email.sentAt);
-  console.log(date);
+  // console.log(date);
 
   function changeStartedState(email) {
     console.log("in on update isStarred ");
