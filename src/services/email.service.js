@@ -18,8 +18,8 @@ var getSortBy = {};
 var getPageIdx = 0;
 
 const loggedinUser = {
-  email: "user@appsus.com",
-  fullname: "Mahatma Appsus",
+  email: "sarit@mail.com",
+  fullname: "Sarit A",
 };
 
 _createEmails();
@@ -29,8 +29,19 @@ async function query(filterBy) {
   let emails = await storageService.query(STORAGE_KEY);
   console.log("emails", { emails });
   if (filterBy) {
-    let { status, txt, isRead, from, to, subject, hasTheWords, doesntHave } =
-      filterBy;
+    let {
+      status,
+      txt,
+      isRead,
+      from,
+      to,
+      subject,
+      hasTheWords,
+      doesntHave,
+      fromMe,
+      toMe,
+    } = filterBy;
+    console.log("here in the service");
     if (txt != null) {
       emails = emails.filter(
         (email) =>
@@ -71,6 +82,18 @@ async function query(filterBy) {
           !email.to.toLowerCase().includes(doesntHave.toLowerCase()) ||
           !email.subject.toLowerCase().includes(doesntHave.toLowerCase())
       );
+      if (fromMe === true) {
+        // emails = emails.filter((email) => email.from === loggedinUser.email);
+        console.log("fromMe");
+      }
+      if (toMe === true) {
+        // emails = emails.filter((email) => email.to === loggedinUser.email);
+        console.log("toMe");
+      }
+      if (isStarred === true) {
+        // emails = emails.filter((email) => email.to === loggedinUser.email);
+        console.log("Starred");
+      }
     }
 
     // // Sort
@@ -130,13 +153,17 @@ function getDefaultFilter() {
     subject: null,
     hasTheWords: null,
     doesntHave: null,
+    fromMe: "",
+    toMe: "",
+    isStarred: null,
   };
 }
 
 function createEmail(
   subject = utilService.makeLorem(5),
   body = utilService.makeLorem(20),
-  from = "momo@momo.com",
+  from = "sarit@mail.com",
+  // from = "momo@momo.com",
   to = "user@appsus.com"
 ) {
   return {

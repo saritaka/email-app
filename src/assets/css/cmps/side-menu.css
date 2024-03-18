@@ -29,10 +29,12 @@
   align-items: center;
   padding: 05px 20px 5px 26px;
   text-decoration: none;
+  font-size: 14px;
 }
 
 .side-menu > nav > a > img {
   margin-right: 12px;
+  opacity: 0.65;
 }
 
 .side-menu > nav a:hover {
@@ -43,35 +45,7 @@
 .side-menu > nav a.active {
   background-color: #d3e3fd;
   border-radius: 0 16px 16px 0px;
+  font-weight: bold;
+  color: black;
+  font-size: 14px;
 }
-
-/* nav a {
-    height: 32px;
-    display: flex;
-    align-items: center;
-    padding-left: 26px;
-    margin-right: 15px;
-}
-
-nav a:hover {
-    background-color: rgba(32, 33, 36, 0.059);
-    border-radius: 0 16px 16px 0;
-    text-decoration: none;
-}
-
-
-
-a.active {
-    box-shadow: inset 0 0 0 1px #aaa;
-    background-color: rgba(32, 33, 36, 0.122);
-    border-radius: 0 16px 16px 0
-}
-
-nav img {
-    margin-right: 18px;
-}
-
-nav button {
-    border: none;
-    background-color: transparent;
-} */

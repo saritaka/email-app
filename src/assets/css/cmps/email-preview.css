@@ -7,6 +7,7 @@
   /* flex-wrap: nowrap; */
   font-size: 14px;
   display: grid;
+  /* grid-template-columns: repeat(3, 1fr); */
   grid-template-columns: repeat(3, 1fr);
 
   align-items: center;
@@ -20,7 +21,7 @@
 }
 
 .name {
-  width: 200px;
+  width: 250px;
   /* padding-right: 20px; */
   justify-content: start;
   align-items: center;
@@ -30,7 +31,7 @@
   /* display: flex; */
   /* flex-wrap: nowrap; */
 
-  width: 464px;
+  width: 700px;
   /* padding-right: 16px; */
   overflow: hidden;
   text-overflow: ellipsis;
@@ -45,6 +46,8 @@
   /* min-width: 72px; */
   justify-content: end;
   align-items: center;
+  /* margin-left: 40px; */
+  min-width: 9vw;
 }
 
 .read {

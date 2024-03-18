@@ -16,12 +16,12 @@ export function SortButtons() {
         <img src={sortUp}></img>All
       </button> */}
       {/* <select value={} onChange={} id="" name=""> */}
-      {/* <select value="test" className="sort-btns flex auto-center">
+      <select value="test" className="sort-btns flex auto-center">
         <option value="">All</option>
         <option value="Read">Read</option>
-        <option value="Unread">Unread</option> */}
-      {/* <img src={sortUp}></img> */}
-      {/* </select> */}
+        <option value="Unread">Unread</option>
+        <img src={sortUp}></img>
+      </select>
     </section>
   );
 }

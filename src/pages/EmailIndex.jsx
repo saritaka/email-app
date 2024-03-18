@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
+import { useLocation } from "react-router-dom";
 import { emailService } from "../services/email.service";
 
 import { Header } from "../cmps/Header";
@@ -10,30 +11,29 @@ import { MainEmail } from "../cmps/MainEmail";
 
 export function EmailIndex() {
   const [emails, setEmails] = useState(null);
-  // const [email, setEmail] = useState(null);
-
   const [filterBy, setFilterBy] = useState(emailService.getDefaultFilter());
   // const [sortBy, setSortBy] = useState(emailService.getSortedList())
 
   const [menuOpen, setMenu] = useState(true);
 
+  const location = useLocation();
+  const params = useParams();
+  console.log("Location", location);
   console.log("filter in index", filterBy);
 
   // const params = useParams();
   // const navigate = useNavigate();
 
   useEffect(() => {
+    console.log(location.pathname);
+    setEmailFolder(location.pathname);
     loadEmails();
+  }, []);
+
+  useEffect(() => {
+    loadEmails();
+    console.log("filter by", filterBy);
   }, [filterBy]);
-
-  // useEffect(() => {
-
-  //   loadEmails();
-  // }, [filterBy]);
-
-  // useEffect(() => {
-  //   loadEmail();
-  // }, [params.emailId]);
 
   function onSetFilter(fieldsToUpdate) {
     setFilterBy((prevFilter) => ({ ...prevFilter, ...fieldsToUpdate }));
@@ -87,6 +87,29 @@ export function EmailIndex() {
     }
   }
 
+  function setEmailFolder(folder) {
+    console.log("folder", folder);
+    // if (folder) {
+    switch (folder) {
+      case "/inbox":
+        return setFilterBy((prevFilter) => ({
+          ...prevFilter,
+          toMe: true,
+        }));
+      // case "/sent":
+      //   return setFilterBy((prevFilter) => ({
+      //     ...prevFilter,
+      //     fromMe: true,
+      //   }));
+      // case "/starred":
+      //   return setFilterBy((prevFilter) => ({
+      //     ...prevFilter,
+      //     fromMe: true,
+      //   }));
+    }
+    // }
+  }
+
   function onOpenMenu() {
     setMenu(!menuOpen);
   }
@@ -105,7 +128,7 @@ export function EmailIndex() {
       </div>
       <div className="menu">
         {/* <SideMenu setMenu={setMenu} /> */}
-        <SideMenu onSetFilter={onSetFilter} />
+        <SideMenu filterBy={filterBy} onSetFilter={onSetFilter} />
       </div>
       <div className="email-container">
         <MainEmail
@@ -113,16 +136,6 @@ export function EmailIndex() {
           onRemoveEmail={onRemoveEmail}
           onUpdateEmail={onUpdateEmail}
         />
-
-        {/* {params.emailId ? (
-          <EmailDetails email={email} />
-        ) : (
-          <EmailList
-            emails={emails}
-            onRemoveEmail={onRemoveEmail}
-            onUpdateEmail={onUpdateEmail}
-          />
-        )} */}
       </div>
     </section>
   );
