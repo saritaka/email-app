@@ -10,6 +10,7 @@ export const emailService = {
   getDefaultFilter,
   setEmailSort,
   nextPage,
+  setEmailFolder,
 };
 
 const STORAGE_KEY = "emails";
@@ -40,8 +41,9 @@ async function query(filterBy) {
       doesntHave,
       fromMe,
       toMe,
+      isStarred,
     } = filterBy;
-    console.log("here in the service");
+    console.log("here in the service", filterBy);
     if (txt != null) {
       emails = emails.filter(
         (email) =>
@@ -82,18 +84,18 @@ async function query(filterBy) {
           !email.to.toLowerCase().includes(doesntHave.toLowerCase()) ||
           !email.subject.toLowerCase().includes(doesntHave.toLowerCase())
       );
-      if (fromMe === true) {
-        // emails = emails.filter((email) => email.from === loggedinUser.email);
-        console.log("fromMe");
-      }
-      if (toMe === true) {
-        // emails = emails.filter((email) => email.to === loggedinUser.email);
-        console.log("toMe");
-      }
-      if (isStarred === true) {
-        // emails = emails.filter((email) => email.to === loggedinUser.email);
-        console.log("Starred");
-      }
+    }
+    if (fromMe === true) {
+      emails = emails.filter((email) => email.from === loggedinUser.email);
+      console.log("fromMe", loggedinUser.email);
+    }
+    if (toMe === true) {
+      emails = emails.filter((email) => email.to === loggedinUser.email);
+      console.log("toMe", loggedinUser.email);
+    }
+    if (isStarred === true) {
+      emails = emails.filter((email) => email.isStarred === true);
+      console.log("Starred");
     }
 
     // // Sort
@@ -106,8 +108,8 @@ async function query(filterBy) {
     // }
 
     // Pagination
-    const startIdx = getPageIdx * PAGE_SIZE; //1 * 4
-    emails = emails.slice(startIdx, startIdx + PAGE_SIZE); //4 - 8
+    const startIdx = getPageIdx * PAGE_SIZE; //1 * 50
+    emails = emails.slice(startIdx, startIdx + PAGE_SIZE); //50 - 100...
     // console.log("emailsssssssss", emails);
 
     return emails;
@@ -153,10 +155,33 @@ function getDefaultFilter() {
     subject: null,
     hasTheWords: null,
     doesntHave: null,
-    fromMe: "",
-    toMe: "",
+    fromMe: null,
+    toMe: null,
     isStarred: null,
   };
+}
+
+function setEmailFolder(folder, emails) {
+  console.log("folder", folder);
+
+  switch (folder) {
+    case "/email":
+      console.log(
+        "on email folder and /email",
+        emails.filter((email) => email.to === loggedinUser.email)
+      );
+      return emails.filter((email) => email.to === loggedinUser.email);
+    case "/inbox":
+      console.log(
+        "on email folder and /inbox",
+        emails.filter((email) => email.to === loggedinUser.email)
+      );
+      return emails.filter((email) => email.to === loggedinUser.email);
+    case "/sent":
+      return emails.filter((email) => email.from === loggedinUser.email);
+    case "/starred":
+      return emails.filter((email) => email.isStarred === true);
+  }
 }
 
 function createEmail(

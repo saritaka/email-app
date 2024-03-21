@@ -1,0 +1,85 @@
+.email-compose {
+  background-color: white;
+  /* backdrop-filter: blur(15px); */
+  /* background-color: pink; */
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  /* justify-items: flex-end; */
+  /* align-items: flex-end; */
+  z-index: 2;
+  border-radius: 1em 1em 0 0;
+  /* overflow-y: auto; */
+  border: 1px solid gray;
+}
+
+.compose-full-size {
+  inset: 0;
+  margin: 2.8em 9.5em;
+  /* filter: blur(5px); */
+}
+
+.compose-medium {
+  width: 500px;
+  height: 600px;
+}
+
+.compose-header {
+  background-color: #f2f6fc;
+  /* padding: 5px; */
+  /* border-bottom: 1px solid #eceff1; */
+  border-radius: 1em 1em 0 0;
+  /* width: 100%; */
+  color: #0466b1;
+  font-weight: bold;
+  font-size: 14px;
+  padding: 10px 20px 10px 20px;
+}
+
+.compose-form {
+  /* display: flex; */
+  /* flex-direction: column; */
+  max-width: 100%;
+  margin: 1%;
+  justify-content: space-between;
+
+  /* margin: auto; */
+  /* background-color: yellow; */
+}
+
+.compose-form input {
+  border: none;
+  border-bottom: 1px solid #eceff1;
+  padding-bottom: 10px;
+  width: 100%;
+  display: flex;
+  font-size: 14px;
+}
+
+.compose-form input:focus,
+textarea:focus {
+  outline: none;
+}
+
+/* .compose-send-btn {
+} */
+
+.compose-form button {
+  width: 100px;
+  height: 36px;
+  background-color: #1b61d1;
+  color: white;
+  font-weight: 500;
+  border: none;
+  border-radius: 30px;
+  /* display: flex; */
+  /* align-self: ; */
+  justify-self: end;
+}
+
+.compose-form textarea {
+  display: flex;
+  width: 100%;
+  height: 72vh;
+  border: none;
+}

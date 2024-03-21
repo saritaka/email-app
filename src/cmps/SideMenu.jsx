@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 import compose from "../assets/imgs/compose.svg";
 import inbox from "../assets/imgs/inbox.svg";
@@ -18,12 +18,16 @@ export function SideMenu({ filterBy, onSetFilter }) {
     { path: "/sent", icon: send, filledIcon: send_filled, field: "Sent" },
     { path: "/draft", icon: draft, filledIcon: draft_filled, field: "Draft" },
   ];
+  const navigate = useNavigate();
+  function onCompose() {
+    navigate("./compose");
+  }
 
   return (
     <section className="side-menu">
       {/* <button className="compose-btn" onClick={()=>onSetFilter({mail:'compose'})}> */}
       {/* <Link to="./compose"> */}
-      <button className="compose-btn">
+      <button className="compose-btn" onClick={onCompose}>
         <img src={compose}></img>
         Compose
       </button>

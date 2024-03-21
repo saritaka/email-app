@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import { Outlet, useNavigate, useParams } from "react-router";
 import { useLocation } from "react-router-dom";
 import { emailService } from "../services/email.service";
 
@@ -8,12 +8,13 @@ import { SideMenu } from "../cmps/SideMenu";
 // import { EmailList } from "../cmps/EmailList";
 // import { EmailDetails } from "../cmps/EmailDetails";
 import { MainEmail } from "../cmps/MainEmail";
+import { EmailCompose } from "../cmps/EmailCompose";
 
 export function EmailIndex() {
   const [emails, setEmails] = useState(null);
   const [filterBy, setFilterBy] = useState(emailService.getDefaultFilter());
   // const [sortBy, setSortBy] = useState(emailService.getSortedList())
-
+  // const [filterByFolder, setFolder] = useState();
   const [menuOpen, setMenu] = useState(true);
 
   const location = useLocation();
@@ -26,13 +27,15 @@ export function EmailIndex() {
 
   useEffect(() => {
     console.log(location.pathname);
-    setEmailFolder(location.pathname);
-    loadEmails();
+    // setEmailFolder(location.pathname,emails);
+    // filterByFolder(location.path, emails);
+    // loadEmails();
   }, []);
 
   useEffect(() => {
     loadEmails();
     console.log("filter by", filterBy);
+    // filterByFolder(location.pathname, emails);
   }, [filterBy]);
 
   function onSetFilter(fieldsToUpdate) {
@@ -41,8 +44,13 @@ export function EmailIndex() {
 
   async function loadEmails() {
     try {
+      // setEmailFolder(location.pathname);
       const emails = await emailService.query(filterBy);
+
       // const emails = await emailService.query();
+      // filterByFolder(location.path, emails) != {}
+      //   ? setEmails(filterByFolder(location.path, emails))
+      //   : setEmails(emails);
       setEmails(emails);
     } catch (err) {
       console.log("Error in loadEmails", err);
@@ -87,28 +95,47 @@ export function EmailIndex() {
     }
   }
 
-  function setEmailFolder(folder) {
-    console.log("folder", folder);
-    // if (folder) {
-    switch (folder) {
-      case "/inbox":
-        return setFilterBy((prevFilter) => ({
-          ...prevFilter,
-          toMe: true,
-        }));
-      // case "/sent":
-      //   return setFilterBy((prevFilter) => ({
-      //     ...prevFilter,
-      //     fromMe: true,
-      //   }));
-      // case "/starred":
-      //   return setFilterBy((prevFilter) => ({
-      //     ...prevFilter,
-      //     fromMe: true,
-      //   }));
-    }
-    // }
+  function filterByFolder(path, emails) {
+    let updatedEmails = emailService.setEmailFolder(path, emails);
+    return updatedEmails;
   }
+  // function setEmailFolder(folder) {
+  //   console.log("folder", folder);
+  //   // if (folder) {
+  //   switch (folder) {
+  //     case "/inbox":
+  //       return setFilterBy((prevFilter) => ({
+  //         ...prevFilter,
+  //         toMe: true,
+  //       }));
+  //     case "/sent":
+  //       return setFilterBy((prevFilter) => ({
+  //         ...prevFilter,
+  //         fromMe: true,
+  //       }));
+  //     case "/starred":
+  //       return setFilterBy((prevFilter) => ({
+  //         ...prevFilter,
+  //         isStarred: true,
+  //       }));
+  //   }
+  //   // }
+  // }
+  // function setEmailFolder(folder, emails) {
+  //   const user = emailService.loggedinUser;
+  //   console.log(user);
+  //   console.log("folder", folder);
+  //   // if (folder) {
+  //   switch (folder) {
+  //     case "/inbox":
+  //       return emails.filter((email) => email.to === user.email);
+  //     case "/sent":
+  //       return emails.filter((email) => email.from === user.email);
+  //     case "/starred":
+  //       return emails.filter((email) => email.isStarred === true);
+  //   }
+  //   // }
+  // }
 
   function onOpenMenu() {
     setMenu(!menuOpen);
@@ -131,6 +158,7 @@ export function EmailIndex() {
         <SideMenu filterBy={filterBy} onSetFilter={onSetFilter} />
       </div>
       <div className="email-container">
+        <Outlet />
         <MainEmail
           emails={emails}
           onRemoveEmail={onRemoveEmail}

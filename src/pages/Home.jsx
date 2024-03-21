@@ -6,7 +6,7 @@ export function Home() {
   const navigate = useNavigate();
 
   function onLogIn() {
-    navigate("/email");
+    navigate("/inbox");
   }
 
   return (
