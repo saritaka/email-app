@@ -12,10 +12,11 @@ export const emailService = {
   nextPage,
   setEmailFolder,
   getDeafaultEmailFields,
+  getFilterByParams,
 };
 
 const STORAGE_KEY = "emails";
-const PAGE_SIZE = 5;
+const PAGE_SIZE = 20;
 var getSortBy = {};
 var getPageIdx = 0;
 
@@ -29,7 +30,7 @@ _createEmails();
 async function query(filterBy) {
   // async function query() {
   let emails = await storageService.query(STORAGE_KEY);
-  console.log("emails", { emails });
+  // console.log("emails", { emails });
   if (filterBy) {
     let {
       folder,
@@ -46,9 +47,9 @@ async function query(filterBy) {
     } = filterBy;
 
     emails = setEmailFolder(emails, folder);
-    console.log("emails recieved from filterfolder", emails);
+    // console.log("emails recieved from filterfolder", emails);
 
-    console.log("here in the service", filterBy);
+    // console.log("here in the service", filterBy);
     if (txt != null) {
       emails = emails.filter(
         (email) =>
@@ -94,8 +95,9 @@ async function query(filterBy) {
     // Pagination
     // const startIdx = getPageIdx * PAGE_SIZE; //1 * 50
     // emails = emails.slice(startIdx, startIdx + PAGE_SIZE); //50 - 100...
+
     // console.log("emailsssssssss", emails);
-    console.log("emails recieved from getdeafualt", emails);
+    // console.log("emails recieved from getdeafualt", emails);
     return emails;
   }
 }
@@ -158,6 +160,20 @@ function setEmailFolder(emails, folder) {
   }
 }
 
+function getFilterByParams(searchParams) {
+  let defaultFilter = getDefaultFilter();
+  const filterBy = {};
+  console.log("in service - search params", searchParams);
+  // console.log("serachparams.get(field)", searchParams.get(field));
+  console.log("defualt filter ", defaultFilter);
+  // console.log("defualt filter [field]", defaultFilter[field]);
+  for (const field in defaultFilter) {
+    filterBy[field] = searchParams.get(field) || defaultFilter[field];
+  }
+  console.log(filterBy);
+  return filterBy;
+}
+
 function getDeafaultEmailFields(subject = "", body = "", to = "") {
   const now = new Date();
   return {
@@ -175,9 +191,10 @@ function getDeafaultEmailFields(subject = "", body = "", to = "") {
 function createEmail(
   subject = utilService.makeLorem(5),
   body = utilService.makeLorem(20),
-  from = "sarit@mail.com",
-  // from = "momo@momo.com",
-  to = "user@appsus.com"
+  // from = "sarit@mail.com",
+  from = "momo@momo.com",
+  // to = "user@appsus.com"
+  to = "sarit@mail.com"
 ) {
   return {
     id: utilService.makeId(),
@@ -198,7 +215,7 @@ function _createEmails() {
   // let emails = [];
   if (!emails || !emails.length) {
     emails = [];
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 15; i++) {
       emails.push(createEmail());
     }
   }

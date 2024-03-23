@@ -12,7 +12,7 @@ export function EmailFilter({ filterBy, onSetFilter }) {
 
   useEffect(() => {
     onSetFilter(filterByToEdit);
-    console.log("filterByToEdit ", filterByToEdit);
+    // console.log("filterByToEdit ", filterByToEdit);
   }, [filterByToEdit]);
   // }, []);
 
@@ -26,7 +26,7 @@ export function EmailFilter({ filterBy, onSetFilter }) {
 
   function onSubmitFilter(ev) {
     ev.preventDefault();
-    console.log("filterByToEdit", filterByToEdit);
+    // console.log("filterByToEdit", filterByToEdit);
     onSetFilter(filterByToEdit);
   }
 
@@ -39,8 +39,8 @@ export function EmailFilter({ filterBy, onSetFilter }) {
   function handleChange(ev) {
     // let { value, name: field, type } = ev.target;
     let { value, name: field, type } = ev.target;
-    console.log("ev", ev.target);
-    console.log(value, field);
+    // console.log("ev", ev.target);
+    // console.log(value, field);
     // value = type === "number" ? +value : value;
     setFilterByToEdit((prevFilter) => ({ ...prevFilter, [field]: value }));
     console.log("filterByToEdit", filterByToEdit);

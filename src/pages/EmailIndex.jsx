@@ -12,35 +12,45 @@ import { EmailCompose } from "../cmps/EmailCompose";
 
 export function EmailIndex() {
   const [emails, setEmails] = useState(null);
-  const [filterBy, setFilterBy] = useState(emailService.getDefaultFilter());
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [filterBy, setFilterBy] = useState(
+    emailService.getFilterByParams(searchParams)
+  );
   // const [sortBy, setSortBy] = useState(emailService.getSortedList())
   // const [filterByFolder, setFolder] = useState();
+
   const [menuOpen, setMenu] = useState(true);
-  const [searchParams, setSearchParams] = useSearchParams();
 
   // const location = useLocation();
   const params = useParams();
   // console.log("Location", location);
-  console.log("parmams", params);
-  console.log("filter in index", filterBy);
+  // console.log("parmams", params);
+  // console.log("filter in index", filterBy);
 
-  console.log("search params", searchParams);
+  // console.log("search params", searchParams);
 
   // const params = useParams();
   // const navigate = useNavigate();
 
   useEffect(() => {
+    let activeFilterBy = {};
+    for (const field in filterBy) {
+      if (filterBy[field] != null) {
+        activeFilterBy[field] = filterBy[field];
+      }
+    }
+    setSearchParams(activeFilterBy);
     loadEmails();
-    console.log(
-      "I am on filter by on index - recieved new filter and supposed to render",
-      filterBy
-    );
-    console.log(emails);
+    // console.log(
+    //   "I am on filter by on index - recieved new filter and supposed to render",
+    //   filterBy
+    // );
+    // console.log(emails);
     // filterByFolder(location.pathname, emails);
   }, [filterBy]);
 
   useEffect(() => {
-    console.log("I changed the folder ", params.emailFolder);
+    // console.log("I changed the folder ", params.emailFolder);
     onSetFilter({ folder: params.emailFolder });
   }, [params.emailFolder]);
 
@@ -63,7 +73,7 @@ export function EmailIndex() {
       //   ? setEmails(filterByFolder(location.path, emails))
       //   : setEmails(emails);
       setEmails(emails);
-      console.log("emails after setEmail", emails);
+      // console.log("emails after setEmail", emails);
     } catch (err) {
       console.log("Error in loadEmails", err);
     }
@@ -112,16 +122,16 @@ export function EmailIndex() {
     try {
       const addEmail = await emailService.save(email);
       setEmails((prevEmails) => [...prevEmails, addEmail]);
-      console.log("just updated the emails", emails);
+      // console.log("just updated the emails", emails);
     } catch (err) {
       console.log("Error in onUpdateEmail", err);
     }
   }
 
-  function filterByFolder(path, emails) {
-    let updatedEmails = emailService.setEmailFolder(path, emails);
-    return updatedEmails;
-  }
+  // function filterByFolder(path, emails) {
+  //   let updatedEmails = emailService.setEmailFolder(path, emails);
+  //   return updatedEmails;
+  // }
   // function setEmailFolder(folder) {
   //   console.log("folder", folder);
   //   // if (folder) {
