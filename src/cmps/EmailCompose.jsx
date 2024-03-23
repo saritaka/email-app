@@ -15,7 +15,6 @@ export function EmailCompose({ onAddEmail }) {
   function handleChange(ev) {
     let { value, name: field, type } = ev.target;
     setEmail((prevEmail) => ({ ...prevEmail, [field]: value }));
-    console.log("emaillllllllll", email);
   }
 
   console.log("email to save - the default values: ", email);

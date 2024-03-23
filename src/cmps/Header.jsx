@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { EmailFilter } from "./EmailFilter";
 
 import logo from "../assets/imgs/gmail.svg";
+// import logo from "../assets/imgs/gmail.png";
 import menuIcon from "../assets/imgs/menu.svg";
 // import searchIcon from "../assets/imgs/search.svg";
 // import filterIcon from "../assets/imgs/tune.svg";
@@ -13,6 +14,8 @@ import settingsIcon from "../assets/imgs/settings.svg";
 export function Header({ filterBy, onSetFilter }) {
   // const [filterByToEdit, setFilterByToEdit] = useState(filterBy);
   const [menuOpen, setMenu] = useState(true);
+
+  const navigate = useNavigate();
 
   // // useEffect(() => {
   // //   onSetFilter(filterByToEdit);
@@ -47,13 +50,13 @@ export function Header({ filterBy, onSetFilter }) {
           </button>
         </div>
         <div>
-          <button className="logo">
+          <button className="logo" onClick={() => navigate("/inbox")}>
             <img src={logo}></img>
           </button>
         </div>
         <div>
-          <button className="logo">
-            <span>Gmail</span>
+          <button className="logo" onClick={() => navigate("/inbox")}>
+            Gmail
           </button>
         </div>
       </div>

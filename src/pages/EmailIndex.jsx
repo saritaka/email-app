@@ -102,6 +102,7 @@ export function EmailIndex() {
           currEmail.id === updatedEmail.id ? updatedEmail : currEmail
         )
       );
+      loadEmails();
     } catch (err) {
       console.log("Error in onUpdateEmail", err);
     }

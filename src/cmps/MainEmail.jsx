@@ -32,6 +32,7 @@ export function MainEmail({
     //     var updatefield = email.isRead;
     //   }
     if (email[field] === false || updateAnyway) {
+      // if (updateAnyway) {
       const newStatus = { ...email, [field]: !email[field] };
       console.log("newstatus", newStatus);
       onUpdateEmail(newStatus);
