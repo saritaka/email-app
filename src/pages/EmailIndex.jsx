@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Outlet, useNavigate, useParams } from "react-router";
-import { useLocation } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import { emailService } from "../services/email.service";
 
 import { Header } from "../cmps/Header";
@@ -16,27 +16,33 @@ export function EmailIndex() {
   // const [sortBy, setSortBy] = useState(emailService.getSortedList())
   // const [filterByFolder, setFolder] = useState();
   const [menuOpen, setMenu] = useState(true);
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const location = useLocation();
+  // const location = useLocation();
   const params = useParams();
-  console.log("Location", location);
+  // console.log("Location", location);
+  console.log("parmams", params);
   console.log("filter in index", filterBy);
+
+  console.log("search params", searchParams);
 
   // const params = useParams();
   // const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(location.pathname);
-    // setEmailFolder(location.pathname,emails);
-    // filterByFolder(location.path, emails);
-    // loadEmails();
-  }, []);
-
-  useEffect(() => {
     loadEmails();
-    console.log("filter by", filterBy);
+    console.log(
+      "I am on filter by on index - recieved new filter and supposed to render",
+      filterBy
+    );
+    console.log(emails);
     // filterByFolder(location.pathname, emails);
   }, [filterBy]);
+
+  useEffect(() => {
+    console.log("I changed the folder ", params.emailFolder);
+    onSetFilter({ folder: params.emailFolder });
+  }, [params.emailFolder]);
 
   function onSetFilter(fieldsToUpdate) {
     setFilterBy((prevFilter) => ({ ...prevFilter, ...fieldsToUpdate }));
@@ -45,6 +51,11 @@ export function EmailIndex() {
   async function loadEmails() {
     try {
       // setEmailFolder(location.pathname);
+      // setFilterBy((prevFilter) => ({
+      //   ...prevFilter,
+      //   status: params.emailFolder,
+      // }));
+      // const emails = await emailService.query(filterBy, folder=params.emailFolder);
       const emails = await emailService.query(filterBy);
 
       // const emails = await emailService.query();
@@ -52,6 +63,7 @@ export function EmailIndex() {
       //   ? setEmails(filterByFolder(location.path, emails))
       //   : setEmails(emails);
       setEmails(emails);
+      console.log("emails after setEmail", emails);
     } catch (err) {
       console.log("Error in loadEmails", err);
     }
@@ -90,6 +102,16 @@ export function EmailIndex() {
           currEmail.id === updatedEmail.id ? updatedEmail : currEmail
         )
       );
+    } catch (err) {
+      console.log("Error in onUpdateEmail", err);
+    }
+  }
+
+  async function onAddEmail(email) {
+    try {
+      const addEmail = await emailService.save(email);
+      setEmails((prevEmails) => [...prevEmails, addEmail]);
+      console.log("just updated the emails", emails);
     } catch (err) {
       console.log("Error in onUpdateEmail", err);
     }
@@ -141,6 +163,8 @@ export function EmailIndex() {
     setMenu(!menuOpen);
   }
 
+  console.log("search params after pressing compose", searchParams.toString());
+
   if (!emails) return <div>Loading..</div>;
 
   return (
@@ -155,16 +179,27 @@ export function EmailIndex() {
       </div>
       <div className="menu">
         {/* <SideMenu setMenu={setMenu} /> */}
-        <SideMenu filterBy={filterBy} onSetFilter={onSetFilter} />
+        <SideMenu
+          filterBy={filterBy}
+          onSetFilter={onSetFilter}
+          setSearchParams={setSearchParams}
+        />
       </div>
       <div className="email-container">
-        <Outlet />
         <MainEmail
+          // currentFolder={params}
           emails={emails}
           onRemoveEmail={onRemoveEmail}
           onUpdateEmail={onUpdateEmail}
         />
+        {searchParams.toString().includes("compose=new") ? (
+          <EmailCompose onAddEmail={onAddEmail} />
+        ) : (
+          ""
+        )}
       </div>
+      {/* <EmailCompose onAddEmail={onAddEmail} /> */}
+      {/* <Outlet context={{ title: "Compose", onAddEmail }} /> */}
     </section>
   );
 }

@@ -4,12 +4,14 @@ import { EmailPreview } from "./EmailPreview";
 import { SortButtons } from "./SortButtons";
 
 export function EmailList({
+  // currentFolder,
   emails,
   onRemoveEmail,
   onUpdateEmail,
   changeState,
 }) {
   console.log({ emails });
+  // console.log("Im on email list", currentFolder);
   // let readStatus = useRef();
 
   return (
@@ -24,6 +26,7 @@ export function EmailList({
               onClick={() => changeReadState(email)}
             > */}
             <EmailPreview
+              // currentFolder={currentFolder}
               email={email}
               onRemoveEmail={onRemoveEmail}
               onUpdateEmail={onUpdateEmail}

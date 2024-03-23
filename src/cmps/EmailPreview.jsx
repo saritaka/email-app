@@ -10,6 +10,7 @@ import emailRead from "../assets/imgs/mark_email_read.svg";
 import emailUnread from "../assets/imgs/mark_email_unread.svg";
 
 export function EmailPreview({
+  // currentFolder,
   email,
   onRemoveEmail,
   onUpdateEmail,
@@ -22,6 +23,7 @@ export function EmailPreview({
   // const [isMarkedAsUnRead, setUnRead] = useState();
   // const [isChecked, setChecked] = useState();
 
+  // console.log("Im on email preview", currentFolder);
   const date = new Date(email.sentAt);
   // console.log(date);
 
@@ -36,6 +38,8 @@ export function EmailPreview({
   }
 
   const readDisplay = email.isRead ? "read" : "unread";
+  // console.log("testttttttttttttt", currentFolder.emailFolder + `/${email.id}`);
+  // console.log("testttttttttttttt", `${email.id}`);
 
   return (
     <article className={`email-preview ${readDisplay}`}>
@@ -59,7 +63,10 @@ export function EmailPreview({
           )}
         </button>
       </div>
-      <Link to={`/email/${email.id}`}>
+      {/* <Link to={currentFolder / `${email.id}`}> */}
+      {/* <Link to={currentFolder.emailFolder + `/${email.id}`}> */}
+      <Link to={`./${email.id}`}>
+        {/* <Link to={`../${email.id}`}> */}
         <div className="flex space-between">
           {/* <div className="flex name"> */}
           <div className="name">

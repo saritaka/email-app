@@ -79,7 +79,7 @@ export function EmailFilter({ filterBy, onSetFilter }) {
               id="from"
               name="from"
               onChange={handleChange}
-              // value={filterByToEdit.from}
+              value={filterByToEdit.from}
             ></input>
             <label>To</label>
             <input
@@ -87,7 +87,7 @@ export function EmailFilter({ filterBy, onSetFilter }) {
               id="to"
               name="to"
               onChange={handleChange}
-              // value={filterByToEdit.to}
+              value={filterByToEdit.to}
             ></input>
             <label>Subject</label>
             <input
@@ -95,7 +95,7 @@ export function EmailFilter({ filterBy, onSetFilter }) {
               id="subject"
               name="subject"
               onChange={handleChange}
-              // value={filterByToEdit.txt}
+              value={filterByToEdit.txt}
             ></input>
             <label>Has the words</label>
             <input
@@ -103,7 +103,7 @@ export function EmailFilter({ filterBy, onSetFilter }) {
               id="hasTheWords"
               name="hasTheWord"
               onChange={handleChange}
-              // value={filterByToEdit.txt}
+              value={filterByToEdit.txt}
             ></input>
             <label>Doesn't Have the words</label>
             <input
@@ -111,7 +111,7 @@ export function EmailFilter({ filterBy, onSetFilter }) {
               id="DoesntHave"
               name="DoesntHave"
               onChange={handleChange}
-              // value={filterByToEdit.txt}
+              value={filterByToEdit.txt}
             ></input>
             <button>Search</button>
           </form>

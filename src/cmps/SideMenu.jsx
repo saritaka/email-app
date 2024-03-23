@@ -11,7 +11,7 @@ import draft from "../assets/imgs/draft.svg";
 import draft_filled from "../assets/imgs/draft_filled.svg";
 
 // export function SideMenu({ setMenu }) {
-export function SideMenu({ filterBy, onSetFilter }) {
+export function SideMenu({ filterBy, onSetFilter, setSearchParams }) {
   const navigationButtons = [
     { path: "/inbox", icon: inbox, filledIcon: inbox_filled, field: "Inbox" },
     { path: "/starred", icon: star, filledIcon: star_filled, field: "Starred" },
@@ -19,8 +19,10 @@ export function SideMenu({ filterBy, onSetFilter }) {
     { path: "/draft", icon: draft, filledIcon: draft_filled, field: "Draft" },
   ];
   const navigate = useNavigate();
+
   function onCompose() {
-    navigate("./compose");
+    // navigate("./compose");
+    setSearchParams({ compose: "new" });
   }
 
   return (

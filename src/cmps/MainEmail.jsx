@@ -2,7 +2,12 @@ import { useNavigate, useParams } from "react-router";
 import { EmailList } from "./EmailList";
 import { Outlet } from "react-router-dom";
 
-export function MainEmail({ emails, onRemoveEmail, onUpdateEmail }) {
+export function MainEmail({
+  // currentFolder,
+  emails,
+  onRemoveEmail,
+  onUpdateEmail,
+}) {
   const params = useParams();
   //   const navigate = useNavigate();
 
@@ -16,6 +21,8 @@ export function MainEmail({ emails, onRemoveEmail, onUpdateEmail }) {
   //   }
   // }
 
+  //updateAnyway was set in order to change the isRead status only
+  //on the first click on the email line
   function changeState(email, field, updateAnyway = true) {
     console.log("Im on changeState", email);
     console.log("Im on changeState", field);
@@ -42,6 +49,7 @@ export function MainEmail({ emails, onRemoveEmail, onUpdateEmail }) {
       </div> */}
       {!params.emailId && (
         <EmailList
+          // currentFolder={currentFolder}
           emails={emails}
           onRemoveEmail={onRemoveEmail}
           onUpdateEmail={onUpdateEmail}
@@ -49,7 +57,7 @@ export function MainEmail({ emails, onRemoveEmail, onUpdateEmail }) {
         />
       )}
       {/* )} */}
-      <Outlet context={{ changeState }} />
+      <Outlet context={{ title: "state", changeState }} />
     </section>
   );
 }

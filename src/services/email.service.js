@@ -11,10 +11,11 @@ export const emailService = {
   setEmailSort,
   nextPage,
   setEmailFolder,
+  getDeafaultEmailFields,
 };
 
 const STORAGE_KEY = "emails";
-const PAGE_SIZE = 50;
+const PAGE_SIZE = 5;
 var getSortBy = {};
 var getPageIdx = 0;
 
@@ -31,7 +32,7 @@ async function query(filterBy) {
   console.log("emails", { emails });
   if (filterBy) {
     let {
-      status,
+      folder,
       txt,
       isRead,
       from,
@@ -39,10 +40,14 @@ async function query(filterBy) {
       subject,
       hasTheWords,
       doesntHave,
-      fromMe,
-      toMe,
-      isStarred,
+      // fromMe,
+      // toMe,
+      // isStarred,
     } = filterBy;
+
+    emails = setEmailFolder(emails, folder);
+    console.log("emails recieved from filterfolder", emails);
+
     console.log("here in the service", filterBy);
     if (txt != null) {
       emails = emails.filter(
@@ -85,33 +90,12 @@ async function query(filterBy) {
           !email.subject.toLowerCase().includes(doesntHave.toLowerCase())
       );
     }
-    if (fromMe === true) {
-      emails = emails.filter((email) => email.from === loggedinUser.email);
-      console.log("fromMe", loggedinUser.email);
-    }
-    if (toMe === true) {
-      emails = emails.filter((email) => email.to === loggedinUser.email);
-      console.log("toMe", loggedinUser.email);
-    }
-    if (isStarred === true) {
-      emails = emails.filter((email) => email.isStarred === true);
-      console.log("Starred");
-    }
-
-    // // Sort
-    // if (getSortBy.isRead !== undefined) {
-    //   cars.sort((c1, c2) => (c1.maxSpeed - c2.maxSpeed) * gSortBy.maxSpeed);
-    // } else if (gSortBy.vendor !== undefined) {
-    //   cars.sort(
-    //     (c1, c2) => c1.vendor.localeCompare(c2.vendor) * gSortBy.vendor
-    //   );
-    // }
 
     // Pagination
-    const startIdx = getPageIdx * PAGE_SIZE; //1 * 50
-    emails = emails.slice(startIdx, startIdx + PAGE_SIZE); //50 - 100...
+    // const startIdx = getPageIdx * PAGE_SIZE; //1 * 50
+    // emails = emails.slice(startIdx, startIdx + PAGE_SIZE); //50 - 100...
     // console.log("emailsssssssss", emails);
-
+    console.log("emails recieved from getdeafualt", emails);
     return emails;
   }
 }
@@ -147,7 +131,7 @@ async function nextPage() {
 
 function getDefaultFilter() {
   return {
-    status: null,
+    folder: null,
     txt: null, //has the words
     isRead: null,
     from: null,
@@ -155,33 +139,37 @@ function getDefaultFilter() {
     subject: null,
     hasTheWords: null,
     doesntHave: null,
-    fromMe: null,
-    toMe: null,
-    isStarred: null,
+    // fromMe: null,
+    // toMe: null,
+    // isStarred: null,
   };
 }
 
-function setEmailFolder(folder, emails) {
-  console.log("folder", folder);
-
+function setEmailFolder(emails, folder) {
   switch (folder) {
-    case "/email":
-      console.log(
-        "on email folder and /email",
-        emails.filter((email) => email.to === loggedinUser.email)
-      );
+    case "inbox":
       return emails.filter((email) => email.to === loggedinUser.email);
-    case "/inbox":
-      console.log(
-        "on email folder and /inbox",
-        emails.filter((email) => email.to === loggedinUser.email)
-      );
-      return emails.filter((email) => email.to === loggedinUser.email);
-    case "/sent":
+    case "sent":
       return emails.filter((email) => email.from === loggedinUser.email);
-    case "/starred":
-      return emails.filter((email) => email.isStarred === true);
+    case "starred":
+      return emails.filter((email) => email.isStarred);
+    // case "trash":
+    //   return emails.filter((email) => email.removedAt);
   }
+}
+
+function getDeafaultEmailFields(subject = "", body = "", to = "") {
+  const now = new Date();
+  return {
+    subject,
+    body,
+    from: loggedinUser.email,
+    to,
+    sentAt: now,
+    isRead: null,
+    isStarred: null,
+    removedAt: null,
+  };
 }
 
 function createEmail(
@@ -210,7 +198,7 @@ function _createEmails() {
   // let emails = [];
   if (!emails || !emails.length) {
     emails = [];
-    for (let i = 0; i < 55; i++) {
+    for (let i = 0; i < 5; i++) {
       emails.push(createEmail());
     }
   }

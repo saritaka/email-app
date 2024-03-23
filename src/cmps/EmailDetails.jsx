@@ -9,6 +9,9 @@ export function EmailDetails() {
   const [email, setEmail] = useState(null);
 
   const params = useParams();
+  console.log("params in email details", params);
+  console.log("params in email details", params.emailId);
+  console.log("params in email details", params.emailFolder);
   const navigate = useNavigate();
 
   const context = useOutletContext();
@@ -28,7 +31,7 @@ export function EmailDetails() {
       setEmail(email);
       context.changeState(email, "isRead", false);
     } catch (err) {
-      navigate("/email");
+      navigate(-1);
       console.log("Error in loadEmail for display", err);
     }
   }
@@ -39,7 +42,8 @@ export function EmailDetails() {
   if (!email) return <div>Loading..</div>;
   return (
     <section className="email-container">
-      <Link to="/email">Go back</Link>
+      {/* <Link to="/email">Go back</Link> */}
+      <Link to={"/" + params.emailFolder}>Go back</Link>
       {/* <section> */}
       <h2>{email.subject}</h2>
       <h2>{email.from}</h2>
