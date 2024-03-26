@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 import searchIcon from "../assets/imgs/search.svg";
 import filterIcon from "../assets/imgs/tune.svg";
+import { EmailFilterModal } from "./EmailFilterModal";
 
 export function EmailFilter({ filterBy, onSetFilter }) {
   const [filterByToEdit, setFilterByToEdit] = useState(filterBy);
@@ -30,18 +31,9 @@ export function EmailFilter({ filterBy, onSetFilter }) {
     onSetFilter(filterByToEdit);
   }
 
-  // function onSubmitFilter(ev) {
-  //   ev.preventDefault();
-  //   console.log("filterBoxfilterByToEdit", filterBoxfilterByToEdit);
-  //   onSetFilter(filterBoxfilterByToEdit);
-  // }
-
   function handleChange(ev) {
-    // let { value, name: field, type } = ev.target;
     let { value, name: field, type } = ev.target;
     // console.log("ev", ev.target);
-    // console.log(value, field);
-    // value = type === "number" ? +value : value;
     setFilterByToEdit((prevFilter) => ({ ...prevFilter, [field]: value }));
     console.log("filterByToEdit", filterByToEdit);
   }
@@ -50,6 +42,7 @@ export function EmailFilter({ filterBy, onSetFilter }) {
     setModal(!openModal);
     console.log("setModal", openModal);
   }
+
   return (
     <article>
       <div className="search-box">
@@ -62,6 +55,7 @@ export function EmailFilter({ filterBy, onSetFilter }) {
               type="text"
               placeholder="Search mail"
               name="txt"
+              value={filterByToEdit.txt}
               onChange={handleChange}
             ></input>
           </div>
@@ -70,54 +64,15 @@ export function EmailFilter({ filterBy, onSetFilter }) {
           <img src={filterIcon}></img>
         </button>
       </div>
+
       {openModal ? (
-        <section className="filter-modal">
-          <form onSubmit={onSubmitFilter}>
-            <label>From</label>
-            <input
-              type="text"
-              id="from"
-              name="from"
-              onChange={handleChange}
-              value={filterByToEdit.from}
-            ></input>
-            <label>To</label>
-            <input
-              type="text"
-              id="to"
-              name="to"
-              onChange={handleChange}
-              value={filterByToEdit.to}
-            ></input>
-            <label>Subject</label>
-            <input
-              type="text"
-              id="subject"
-              name="subject"
-              onChange={handleChange}
-              value={filterByToEdit.txt}
-            ></input>
-            <label>Has the words</label>
-            <input
-              type="text"
-              id="hasTheWords"
-              name="hasTheWord"
-              onChange={handleChange}
-              value={filterByToEdit.txt}
-            ></input>
-            <label>Doesn't Have the words</label>
-            <input
-              type="text"
-              id="DoesntHave"
-              name="DoesntHave"
-              onChange={handleChange}
-              value={filterByToEdit.txt}
-            ></input>
-            <button>Search</button>
-          </form>
-        </section>
+        <EmailFilterModal
+          filterBy={filterBy}
+          onSetFilter={onSetFilter}
+          setModal={setModal}
+        />
       ) : (
-        ""
+        " "
       )}
     </article>
   );

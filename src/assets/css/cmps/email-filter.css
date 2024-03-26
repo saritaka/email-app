@@ -1,9 +1,15 @@
 .filter-modal {
-  position: fixed;
-  width: 600px;
+  position: absolute;
+  /* position: fixed; */
+  width: 720px;
   /* height: 500px; */
   z-index: 10;
-  background-color: white;
+  /* margin: 0 10px 10px 10px; */
+  border: 1px solid #b0b2b4;
+  /* left: 0; */
+
+  /* background-color: blue; */
+
   /* background-color: pink; */
 
   /* display: flex; */
@@ -11,7 +17,68 @@
   /* flex-direction: column; */
 }
 
-.filter-modal form {
+.filter-form {
   display: flex;
   flex-direction: column;
+  background-color: rgb(255, 255, 255, 1);
+  z-index: 100;
+  /* background-color: blue; */
+}
+
+.filter-form > div {
+  display: flex;
+  justify-content: space-between;
+  color: #949697;
+  margin: 10px;
+}
+
+.filter-form > div > input {
+  /* display: flex;
+  flex-direction: column;
+  background-color: white; */
+  /* background-color: blue; */
+
+  border-bottom: 1px solid rgba(176, 178, 180, 0.3);
+  margin-right: 5px;
+  width: 80%;
+}
+
+.filter-form > div > input:focus {
+  border-bottom: 1px solid #71a4f7;
+}
+
+.filter-btn {
+  width: 70px;
+  /* height: 10px; */
+  background-color: #1b61d1;
+
+  border: none;
+  border-radius: 10px;
+  /* display: flex */
+  /* position: absolute; */
+  /* justify-self: end; */
+  /* align-self: ;
+
+  padding: 0 10px 0 10px;
+
+  position: absolute;
+  /*  */
+  /* position: relative; */
+  /* bottom: 0; */
+  /* right: 0; */
+  align-self: end;
+}
+
+.filter-btn > button {
+  /* width: 10px; */
+  /* height: 20px; */
+
+  background-color: #1b61d1;
+  color: white;
+  font-weight: 500;
+  border: none;
+  border-radius: 10px;
+  /* display: flex; */
+  /* align-items: center; */
+  /* justify-self: center; */
 }

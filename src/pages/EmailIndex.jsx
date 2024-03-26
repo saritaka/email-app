@@ -2,6 +2,11 @@ import { useEffect, useState } from "react";
 import { Outlet, useNavigate, useParams } from "react-router";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { emailService } from "../services/email.service";
+import {
+  eventBusService,
+  showErrorMsg,
+  showSuccessMsg,
+} from "../services/event-bus.service";
 
 import { Header } from "../cmps/Header";
 import { SideMenu } from "../cmps/SideMenu";
@@ -41,12 +46,6 @@ export function EmailIndex() {
     }
     setSearchParams(activeFilterBy);
     loadEmails();
-    // console.log(
-    //   "I am on filter by on index - recieved new filter and supposed to render",
-    //   filterBy
-    // );
-    // console.log(emails);
-    // filterByFolder(location.pathname, emails);
   }, [filterBy]);
 
   useEffect(() => {
@@ -60,36 +59,14 @@ export function EmailIndex() {
 
   async function loadEmails() {
     try {
-      // setEmailFolder(location.pathname);
-      // setFilterBy((prevFilter) => ({
-      //   ...prevFilter,
-      //   status: params.emailFolder,
-      // }));
-      // const emails = await emailService.query(filterBy, folder=params.emailFolder);
       const emails = await emailService.query(filterBy);
 
-      // const emails = await emailService.query();
-      // filterByFolder(location.path, emails) != {}
-      //   ? setEmails(filterByFolder(location.path, emails))
-      //   : setEmails(emails);
       setEmails(emails);
       // console.log("emails after setEmail", emails);
     } catch (err) {
       console.log("Error in loadEmails", err);
     }
   }
-
-  // async function loadEmail() {
-  //   try {
-  //     const email = await emailService.getById(params.emailId);
-  //     console.log("email", email);
-  //     console.log("params", params.emailId);
-  //     setEmail(email);
-  //   } catch (err) {
-  //     navigate("/email");
-  //     console.log("Error in loadEmail for display", err);
-  //   }
-  // }
 
   async function onRemoveEmail(emailId) {
     console.log("onRemove", emailId);
@@ -99,6 +76,7 @@ export function EmailIndex() {
       setEmails((prevEmails) => {
         return prevEmails.filter((email) => email.id !== emailId);
       });
+      showSuccessMsg("Email removed successfully");
     } catch (err) {
       console.log("Error in onRemoveEmail", err);
     }
@@ -128,53 +106,14 @@ export function EmailIndex() {
     }
   }
 
-  // function filterByFolder(path, emails) {
-  //   let updatedEmails = emailService.setEmailFolder(path, emails);
-  //   return updatedEmails;
-  // }
-  // function setEmailFolder(folder) {
-  //   console.log("folder", folder);
-  //   // if (folder) {
-  //   switch (folder) {
-  //     case "/inbox":
-  //       return setFilterBy((prevFilter) => ({
-  //         ...prevFilter,
-  //         toMe: true,
-  //       }));
-  //     case "/sent":
-  //       return setFilterBy((prevFilter) => ({
-  //         ...prevFilter,
-  //         fromMe: true,
-  //       }));
-  //     case "/starred":
-  //       return setFilterBy((prevFilter) => ({
-  //         ...prevFilter,
-  //         isStarred: true,
-  //       }));
-  //   }
-  //   // }
-  // }
-  // function setEmailFolder(folder, emails) {
-  //   const user = emailService.loggedinUser;
-  //   console.log(user);
-  //   console.log("folder", folder);
-  //   // if (folder) {
-  //   switch (folder) {
-  //     case "/inbox":
-  //       return emails.filter((email) => email.to === user.email);
-  //     case "/sent":
-  //       return emails.filter((email) => email.from === user.email);
-  //     case "/starred":
-  //       return emails.filter((email) => email.isStarred === true);
-  //   }
-  //   // }
-  // }
-
   function onOpenMenu() {
     setMenu(!menuOpen);
   }
 
-  console.log("search params after pressing compose", searchParams.toString());
+  const { folder, txt, isRead, from, to, subject, hasTheWords, doesntHave } =
+    filterBy;
+
+  // console.log("search params after pressing compose", searchParams.toString());
 
   if (!emails) return <div>Loading..</div>;
 
@@ -182,7 +121,8 @@ export function EmailIndex() {
     <section className="main-prev">
       <div className="top">
         <Header
-          filterBy={filterBy}
+          // filterBy={filterBy}
+          filterBy={{ txt, from, to, subject, hasTheWords, doesntHave }}
           onSetFilter={onSetFilter}
           setMenu={setMenu}
           onOpenMenu={onOpenMenu}
@@ -191,7 +131,8 @@ export function EmailIndex() {
       <div className="menu">
         {/* <SideMenu setMenu={setMenu} /> */}
         <SideMenu
-          filterBy={filterBy}
+          // filterBy={filterBy}
+          filterBy={folder}
           onSetFilter={onSetFilter}
           setSearchParams={setSearchParams}
         />

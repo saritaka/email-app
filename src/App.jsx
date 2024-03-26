@@ -5,6 +5,7 @@ import { EmailIndex } from "./pages/EmailIndex";
 import { AboutUs } from "./pages/AboutUs";
 import { EmailDetails } from "./cmps/EmailDetails";
 import { EmailCompose } from "./cmps/EmailCompose";
+import { UserMsg } from "./cmps/UserMsg";
 
 export function App() {
   return (
@@ -24,6 +25,7 @@ export function App() {
             <Route path="/about" element={<AboutUs />} />
           </Routes>
         </main>
+        <UserMsg />
       </section>
     </Router>
   );
